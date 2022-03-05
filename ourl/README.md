@@ -14,7 +14,7 @@ or
 
 ### install:
 ```
-▻ go get -u github.com/theblackturtle/ourl
+▻ go get github.com/T1nd19d/go-auxs/ourl
 ```
 
 ## Credits:
