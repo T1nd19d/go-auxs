@@ -72,7 +72,8 @@ func main() {
 type fetch func(string) error
 
 func Run(domain string) {
-	fetchers := []fetch{getWaybackUrls, getCommonCrawlURLs, getOtxUrls}
+	//fetchers := []fetch{getWaybackUrls, getCommonCrawlURLs, getOtxUrls}
+	fetchers := []fetch{getWaybackUrls}
 	for _, fn := range fetchers {
 		err := fn(domain)
 		if err != nil {
@@ -275,7 +276,7 @@ func downloadWaybackResults(downloadURL string) error {
 								fmt.Println(r)
 							}
 						} else {
-							fmt.Println(result[2])
+							fmt.Printf("https://web.archive.org/web/%sid_/%s\n", result[1], result[2])
 						}
 					}
 				}
