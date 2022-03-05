@@ -13,6 +13,7 @@ import (
 	"strings"
 	"sync"
 	"time"
+	"regexp"
 
 	"github.com/cornelk/hashmap"
 	jsoniter "github.com/json-iterator/go"
@@ -47,7 +48,8 @@ func main() {
 	var domains []string
 	flag.BoolVar(&IncludeSubs, "subs", false, "include subdomains of target domain")
 	flag.BoolVar(&PageCheck, "p", false, "if the data is large, get by pages")
-	flag.BoolVar(&RawOutput, "r", false, "print raw output (JSON format)")
+	flag.BoolVar(&RawOutput, "r", false, "print raw output (json format)")
+	flag.BoolVar(&BlackListUseLess, "b", false, "Blacklist image from output")
 	flag.BoolVar(&GetDomainOnly, "a", false, "print domain only")
 	flag.BoolVar(&Verbose, "v", false, "enable verbose")
 	flag.StringVar(&FilterFlags, "f", "", "Wayback Machine filter (filter=statuscode:200&filter=!mimetype:text/html)")
@@ -252,6 +254,12 @@ func downloadWaybackResults(downloadURL string) error {
 						if result[2] == "" {
 							continue
 						}
+						if BlackListUseLess {
+							match, _ := regexp.MatchString("image/", result[3])
+							if result[3] != "" && match {
+							continue
+							}
+						}
 						if GetDomainOnly {
 							if u, err := url.Parse(result[2]); err == nil {
 								hostname := u.Hostname()
@@ -276,6 +284,7 @@ func downloadWaybackResults(downloadURL string) error {
 								fmt.Println(r)
 							}
 						} else {
+
 							fmt.Printf("https://web.archive.org/web/%sid_/%s\n", result[1], result[2])
 						}
 					}
