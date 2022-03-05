@@ -1,4 +1,4 @@
-module github.com/j3ssie/go-auxs/ourl
+module github.com/T1nd19d/go-auxs/ourl
 
 go 1.17
 
