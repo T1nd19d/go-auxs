@@ -36,6 +36,7 @@ var (
 	RawOutput     bool
 	Verbose       bool
 	GetDomainOnly bool
+	BlackListUseLess bool
 	FilterFlags   string
 	OutputSet     = &hashmap.HashMap{}
 )
